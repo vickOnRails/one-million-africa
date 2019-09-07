@@ -1,0 +1,4 @@
+[Build]
+command="npm run build"
+base="/"
+publish="/build"
