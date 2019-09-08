@@ -1,33 +1,192 @@
-.App {
+html {
+  font-family: Livvic, sans-serif;
+}
+body {
+  --dark: #1a1a1a;
+  --grey1: #e6e6e6;
+  --grey2: #cccccc;
+  --white: #fff;
+  --red1: #b32524;
+  --red2: #cc2a29;
+}
+html {
+  scroll-behavior: smooth;
+}
+.container {
+  padding: 0 0.8em;
+}
+
+/* Styles for heading*/
+.header {
+  background: var(--dark);
+}
+.header__heading--1 {
+  color: var(--white);
+  margin-bottom: 0.2em;
+  font-size: 3em;
+  max-width: 80%;
+  line-height: 1.2;
+}
+.header__heading--2 {
+  color: var(--grey1);
+  font-size: 1.25em;
+  margin-bottom: 1em;
+  max-width: 90%;
+  font-weight: 400;
+}
+.header__button--link,
+.header__nav--button_link {
+  background: transparent;
+  border: 1px solid var(--grey2);
+  color: var(--grey2);
+  cursor: pointer;
+  transition: border color 0.25s;
+  padding: 0.8em 1em;
+  display: inline-block;
+  text-decoration: none;
+}
+.header__button--link {
+  min-width: 150px;
+  color: var(--white);
   text-align: center;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.header__button--link:hover,
+.header__button--link:active,
+.header__button--link:focus,
+.header__nav--button_link:hover,
+.header__nav--button_link:active,
+.header__nav--button_link:focus {
+  border: 1px solid var(--white);
+  color: var(--white);
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header__button--link.accent_button {
+  background: var(--red1);
+  border: none;
+  transition: background.25s;
+}
+.header__button--link.accent_button:hover,
+.header__button--link.accent_button:active,
+.header__button--link.accent_button:focus {
+  background: var(--red2);
+}
+.header__nav {
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+}
+.header__nav--container {
+  padding: 1em 0;
+}
+.header__copy {
+  padding: 100px 0 50px;
+}
+.header__heading--2 {
+  max-width: 400px;
+}
+.header__heading--1 {
+  max-width: 400px;
+}
+.searchbox__input {
+  border: 1px solid #999999;
+  padding: 0.8em 0.5em;
+  font-size: 1em;
+  transition: 0.25s;
+  font-family: livvic, sans-serif;
+  height: 45px;
+}
+.searchbox__input:hover {
+  border: 1px solid var(--red2);
+}
+.searchbox__input:active,
+.searchbox__input:focus {
+  border: 2px solid var(--red2);
+  outline: 0;
+}
+.select {
+  height: 45px;
+  font-size: 1em;
+  font-family: livvic, sans-serif;
+}
+.select:hover {
+  border: 1px solid var(--red2);
+}
+.select__label--text,
+.input_label {
+  text-transform: uppercase;
+  margin-bottom: 0.3em;
+  font-size: 0.8em;
+}
+.select:focus,
+.select:active {
+  border: 2px solid var(--red2);
+  outline: none;
+}
+.filter__flex {
+  display: flex;
+}
+.sort__flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: 40px;
+}
+.filter {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.filter__text {
+  margin-right: 1em;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.filter__flex div:first-child {
+  margin-right: 1em;
+}
+@media all and (min-width: 759px) {
+  .header__heading--2,
+  .header__heading--1 {
+    max-width: 100%;
+    text-align: center;
   }
-  to {
-    transform: rotate(360deg);
+  .header__heading--2 {
+    max-width: 500px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .header__button--link {
+    display: block;
+    margin: 0 auto;
+    max-width: 150px;
+  }
+  .table__container {
+    max-width: 1000px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .table {
+    width: 100%;
+    margin: 40px 0;
+    border-collapse: collapse;
+    padding: 0 1em;
+    box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.05);
+    /* border-radius: 100px; */
+    border: 1px solid #e6e6e6;
+  }
+  .table__heading {
+    background: #f2f2f2;
+  }
+  .table__heading--row {
+    text-align: left;
+    padding: 1em 0.8em;
+  }
+  .table__heading--row th,
+  .table__body--row td {
+    padding: 1em;
+  }
+  tr.table__body--row {
+    border-bottom: 1px solid #e6e6e6;
+  }
+}
+
+@media all and (min-width: 1023px) {
+  .header__heading--1 {
+    font-size: 4em;
   }
 }
