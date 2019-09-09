@@ -139,7 +139,75 @@ html {
 .filter__flex div:first-child {
   margin-right: 1em;
 }
+.table__heading {
+  display: none;
+}
+.table {
+  margin: 0 auto;
+}
+.table__body--row td {
+  display: block;
+  margin-left: 12px;
+  margin-bottom: 1em;
+  padding-left: 150px;
+
+  position: relative;
+}
+.table__body--row {
+  border-bottom: 1px solid #e6e6e6;
+  margin: 2em auto 0;
+  display: block;
+  padding: 1em 0;
+}
+.table__body--row td {
+  font-weight: normal;
+}
+.table__body--row td:before {
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+  color: #555;
+}
+
+.table__body--row td:nth-child(1):before {
+  content: "SN";
+}
+.table__body--row td:nth-child(2):before {
+  content: "Company";
+}
+.table__body--row td:nth-child(3):before {
+  content: "HQ Country";
+}
+.table__body--row td:nth-child(4):before {
+  content: "Sector";
+}
+.table__body--row td:nth-child(5):before {
+  content: "Amount Raised";
+}
+.table__body--row td:nth-child(6):before {
+  content: "Date Raised";
+}
+.table__body--row td:nth-child(7):before {
+  content: "Investors";
+}
+ul,
+li {
+  list-style-type: none;
+}
+li {
+  margin-bottom: 6px;
+}
+.searchbox.search_company,
+.filter__text {
+  display: none;
+}
+.filter {
+  padding: 0 12px;
+}
 @media all and (min-width: 759px) {
+  :root {
+    font-size: 15px;
+  }
   .header__heading--2,
   .header__heading--1 {
     max-width: 100%;
@@ -163,10 +231,7 @@ html {
   .table {
     width: 100%;
     margin: 40px 0;
-    border-collapse: collapse;
-    padding: 0 1em;
     box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.05);
-    /* border-radius: 100px; */
     border: 1px solid #e6e6e6;
   }
   .table__heading {
@@ -176,17 +241,57 @@ html {
     text-align: left;
     padding: 1em 0.8em;
   }
+  .table__body--row td:before {
+    content: " " !important;
+  }
+  .table__heading {
+    display: table-header-group;
+  }
+  .table__body--row td {
+    display: table-cell;
+  }
   .table__heading--row th,
   .table__body--row td {
-    padding: 1em;
+    padding: 1em 0.8em !important;
+    margin-left: 0;
+  }
+  tr {
+    display: table-row;
+  }
+  th,
+  td {
+    display: table-cell;
   }
   tr.table__body--row {
     border-bottom: 1px solid #e6e6e6;
+    vertical-align: top;
+  }
+  tr.table__body--row td {
+    border-bottom: 1px solid #e6e6e6;
+  }
+  .table__body--row {
+    box-shadow: none;
+    display: table-row;
+  }
+  .searchbox.search_company,
+  .filter__text {
+    display: block;
+  }
+  .filter {
+    padding: 0;
   }
 }
 
 @media all and (min-width: 1023px) {
+  :root {
+    font-size: 17px;
+  }
   .header__heading--1 {
     font-size: 4em;
+  }
+}
+@media all and (min-width: 1360px) {
+  .table__container {
+    max-width: 1200px;
   }
 }

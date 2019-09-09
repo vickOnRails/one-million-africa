@@ -47,7 +47,7 @@ const Table = ({
               <td>{dateRaised}</td>
               <td>
                 {investors.map((investor: string) => {
-                  return <span>{investor}, </span>;
+                  return <li>{investor}, </li>;
                 })}
               </td>
             </tr>
@@ -108,7 +108,11 @@ class Body extends Component<
       let resultArr = this.filterByCompanies(e.target.value);
       this.setState({ searchResult: resultArr });
     } else if (action === "filterHQCountry") {
-      console.log("filtering HQ");
+      let country = e.target.value;
+      let resultCountry = this.filterByCountry(country);
+      this.setState(prevState => {
+        return { searchResult: resultCountry };
+      });
     } else {
       let sector = e.target.value;
       if (sector === "all") {
@@ -122,6 +126,16 @@ class Body extends Component<
         });
       }
     }
+  };
+
+  filterByCountry = (sortString: string) => {
+    let resultArr = this.state.companies.filter((company: any) => {
+      return company.hqCountry
+        .toLowerCase()
+        .startsWith(sortString.toLowerCase());
+    });
+
+    return resultArr;
   };
 
   filterByCompanies = (sortString: string) => {
@@ -157,7 +171,7 @@ class Body extends Component<
 }
 
 const SearchBox = ({ onChange }: { onChange: any }) => (
-  <div className="searchbox">
+  <div className="searchbox search_company">
     <label>
       <p className="input_label">Search Company</p>
       <input
