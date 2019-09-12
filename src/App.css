@@ -20,6 +20,12 @@ html {
 .header {
   background: var(--dark);
 }
+.bold {
+  font-weight: bold;
+}
+.search_result.container {
+  margin-top: 1em;
+}
 .header__heading--1 {
   color: var(--white);
   margin-bottom: 0.2em;
@@ -219,6 +225,21 @@ li {
 .footer a:active,
 .footer a:focus {
   color: var(--red2);
+}
+.no_result {
+  margin-top: 60px;
+}
+.no_result img {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  display: block;
+}
+.centered {
+  text-align: center;
+}
+.no_result h2 {
+  margin-top: 20px;
 }
 @media all and (min-width: 759px) {
   :root {

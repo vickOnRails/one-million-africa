@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Data from "./data.json";
+import Void from "./imgs/void.svg";
 
 const Table = ({
   searchResult
@@ -9,56 +10,64 @@ const Table = ({
   searchResult: Array<any>;
 }) => {
   let companyResults = (
-    <table className="table">
-      <thead className="table__heading">
-        <tr className="table__heading--row">
-          <th>SN</th>
-          <th>Name</th>
-          <th>HQ Country</th>
-          <th>Sector</th>
-          <th>Amount Raised</th>
-          <th>Date Raised</th>
-          <th>Investors</th>
-        </tr>
-      </thead>
-      <tbody className="table__body">
-        {searchResult.map(company => {
-          let {
-            id,
-            name,
-            hqCountry,
-            sector,
-            amountRaised,
-            dateRaised,
-            investors
-          } = company;
-          return (
-            <tr className="table__body--row">
-              <td>{id}</td>
-              <td>{name}</td>
-              <td>{hqCountry}</td>
-              <td>{sector}</td>
-              {amountRaised === "Not Available" ? (
-                <td>{amountRaised}</td>
-              ) : (
-                <td>${amountRaised}M</td>
-              )}
+    <>
+      <p className="search_result container">
+        Results for All African <span className="bold">{}</span> Startups
+      </p>
+      <table className="table">
+        <thead className="table__heading">
+          <tr className="table__heading--row">
+            <th>SN</th>
+            <th>Name</th>
+            <th>HQ Country</th>
+            <th>Sector</th>
+            <th>Amount Raised</th>
+            <th>Date Raised</th>
+            <th>Investors</th>
+          </tr>
+        </thead>
+        <tbody className="table__body">
+          {searchResult.map(company => {
+            let {
+              id,
+              name,
+              hqCountry,
+              sector,
+              amountRaised,
+              dateRaised,
+              investors
+            } = company;
+            return (
+              <tr className="table__body--row">
+                <td>{id}</td>
+                <td>{name}</td>
+                <td>{hqCountry}</td>
+                <td>{sector}</td>
+                {amountRaised === "Not Available" ? (
+                  <td>{amountRaised}</td>
+                ) : (
+                  <td>${amountRaised}M</td>
+                )}
 
-              <td>{dateRaised}</td>
-              <td>
-                {investors.map((investor: string) => {
-                  return <li>{investor}, </li>;
-                })}
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+                <td>{dateRaised}</td>
+                <td>
+                  {investors.map((investor: string) => {
+                    return <li>{investor}, </li>;
+                  })}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </>
   );
 
   let errorMessage = (
-    <p>The company you're looking for is not on this list. </p>
+    <div className="no_result">
+      <img src={Void} alt="Void" className="error-img" />
+      <h2 className="centered">Startup not on this list</h2>
+    </div>
   );
 
   return <>{searchResult.length === 0 ? errorMessage : companyResults}</>;
@@ -91,38 +100,54 @@ const Header: React.FC = () => (
 
 class Body extends Component<
   { children?: React.ReactNode },
-  { companies: Array<{}>; searchResult: Array<{}> }
+  {
+    companies: Array<{}>;
+    searchResult: Array<{}>;
+    companySortValue: string;
+    sectorSortValue: string;
+    countrySortValue: string;
+  }
 > {
   state = {
     companies: [],
-    searchResult: []
+    searchResult: [],
+    companySortValue: "",
+    sectorSortValue: "",
+    countrySortValue: ""
   };
 
   onChange = (e: React.ChangeEvent<HTMLInputElement>, action: string) => {
+    const targetValue = e.target.value;
     if (action === "filterCompanyName") {
-      if (e.target.value.length === 0) {
+      if (targetValue.length < 0) {
         this.setState(prevState => {
-          return { searchResult: prevState.companies };
+          return {
+            searchResult: prevState.companies,
+            companySortValue: e.target.value
+          };
         });
+        console.log(this.state.companySortValue);
       }
-      let resultArr = this.filterByCompanies(e.target.value);
-      this.setState({ searchResult: resultArr });
+      let resultArr = this.filterByCompanies(targetValue);
+      this.setState({ searchResult: resultArr, companySortValue: targetValue });
     } else if (action === "filterHQCountry") {
-      let country = e.target.value;
-      let resultCountry = this.filterByCountry(country);
+      let resultCountry = this.filterByCountry(targetValue);
       this.setState(prevState => {
-        return { searchResult: resultCountry };
+        return {
+          searchResult: resultCountry,
+          countrySortValue: targetValue
+        };
       });
+      console.log(targetValue);
     } else {
-      let sector = e.target.value;
-      if (sector === "all") {
+      if (targetValue === "all") {
         this.setState(prevState => {
           return { searchResult: prevState.companies };
         });
       } else {
-        let resultSector = this.filterBySectors(sector);
+        let resultSector = this.filterBySectors(targetValue);
         this.setState(prevState => {
-          return { searchResult: resultSector };
+          return { searchResult: resultSector, sectorSortValue: targetValue };
         });
       }
     }
@@ -162,7 +187,12 @@ class Body extends Component<
     return (
       <main className="main">
         <section className="table__container">
-          <Sort onChange={this.onChange} />
+          <Sort
+            onChange={this.onChange}
+            companySortValue={this.state.companySortValue}
+            sectorSortValue={this.state.sectorSortValue}
+            countrySortValue={this.state.countrySortValue}
+          />
           <Table companies={companies} searchResult={this.state.searchResult} />
         </section>
       </main>
@@ -170,20 +200,35 @@ class Body extends Component<
   }
 }
 
-const SearchBox = ({ onChange }: { onChange: any }) => (
+const SearchBox = ({
+  onChange,
+  companySortValue
+}: {
+  onChange: any;
+  companySortValue: string;
+}) => (
   <div className="searchbox search_company">
     <label>
       <p className="input_label">Search Company</p>
       <input
         type="text"
         className="searchbox__input"
+        value={companySortValue}
         onChange={e => onChange(e, "filterCompanyName")}
       />
     </label>
   </div>
 );
 
-const Filter = ({ onChange }: { onChange: any }) => {
+const Filter = ({
+  onChange,
+  sectorSortValue,
+  countrySortValue
+}: {
+  onChange: any;
+  countrySortValue: string;
+  sectorSortValue: string;
+}) => {
   const sectorArray = [
     "Education",
     "Jobs",
@@ -208,6 +253,7 @@ const Filter = ({ onChange }: { onChange: any }) => {
             <select
               name="country"
               className="select"
+              value={sectorSortValue}
               onChange={e => onChange(e, "filterSector")}
             >
               <option value="all">All</option>
@@ -226,6 +272,7 @@ const Filter = ({ onChange }: { onChange: any }) => {
                 type="text"
                 className="searchbox__input"
                 placeholder="Enter Country"
+                value={countrySortValue}
                 onChange={e => onChange(e, "filterHQCountry")}
               />
             </div>
@@ -236,10 +283,24 @@ const Filter = ({ onChange }: { onChange: any }) => {
   );
 };
 
-const Sort = ({ onChange }: { onChange: any }) => (
+const Sort = ({
+  onChange,
+  companySortValue,
+  sectorSortValue,
+  countrySortValue
+}: {
+  onChange: any;
+  companySortValue: string;
+  countrySortValue: string;
+  sectorSortValue: string;
+}) => (
   <div className="sort__flex" id="list-start">
-    <SearchBox onChange={onChange} />
-    <Filter onChange={onChange} />
+    <SearchBox onChange={onChange} companySortValue={companySortValue} />
+    <Filter
+      onChange={onChange}
+      countrySortValue={countrySortValue}
+      sectorSortValue={sectorSortValue}
+    />
   </div>
 );
 
