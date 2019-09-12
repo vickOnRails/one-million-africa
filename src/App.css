@@ -105,6 +105,7 @@ html {
   height: 45px;
   font-size: 1em;
   font-family: livvic, sans-serif;
+  background: inherit;
 }
 .select:hover {
   border: 1px solid var(--red2);
@@ -197,12 +198,27 @@ li {
 li {
   margin-bottom: 6px;
 }
-.searchbox.search_company,
-.filter__text {
-  display: none;
-}
 .filter {
   padding: 0 12px;
+}
+.searchbox,
+.select__field:nth-child(2) {
+  display: none;
+}
+.footer {
+  padding: 1em 0;
+}
+.footer p {
+  text-align: center;
+}
+.footer a {
+  color: var(--red1);
+  transition: 0.25s color;
+}
+.footer a:hover,
+.footer a:active,
+.footer a:focus {
+  color: var(--red2);
 }
 @media all and (min-width: 759px) {
   :root {
@@ -277,6 +293,7 @@ li {
   .filter__text {
     display: block;
   }
+
   .filter {
     padding: 0;
   }
@@ -288,6 +305,10 @@ li {
   }
   .header__heading--1 {
     font-size: 4em;
+  }
+  .searchbox,
+  .filter div:nth-child(2) {
+    display: flex;
   }
 }
 @media all and (min-width: 1360px) {

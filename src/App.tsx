@@ -68,11 +68,11 @@ const Header: React.FC = () => (
   <header className="header">
     <div className="container">
       <nav className="header__nav">
-        <div className="header__nav--container">
+        {/* <div className="header__nav--container">
           <a href="" className="header__nav--button_link">
             Add Startup
           </a>
-        </div>
+        </div> */}
       </nav>
 
       <div className="header__copy">
@@ -217,6 +217,7 @@ const Filter = ({ onChange }: { onChange: any }) => {
             </select>
           </label>
         </div>
+
         <div className="select__field">
           <label className="select__label">
             <p className="select__label--text">HQ Country</p>
@@ -247,6 +248,18 @@ const App: React.FC = () => {
     <div className="App">
       <Header />
       <Body />
+      <footer className="footer">
+        <p>
+          Curated by{" "}
+          <a
+            href="http://twitter.com/vick_onrails"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Vick_onrails
+          </a>
+        </p>
+      </footer>
     </div>
   );
 };
